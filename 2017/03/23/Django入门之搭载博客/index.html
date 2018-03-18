@@ -171,7 +171,9 @@
           </p>
         <!-- Post Main Content -->
         <div class="entry-content">
-          <h2 id="Django入门之搭建一个小型博客"><a href="#Django入门之搭建一个小型博客" class="headerlink" title="Django入门之搭建一个小型博客"></a>Django入门之搭建一个小型博客</h2><p><strong>安装输入代码</strong><br><code>$ sudo pip install Django==1.10.1</code><br>安装成功后使用<br> <code>$python</code><br> <code>&gt;&gt;&gt;import django</code><br> <code>&gt;&gt;&gt;print (django.get(version())</code><br>可打印当前django版本</p>
+          <p>本篇内容是利用Python语言，在django模板下搭建一个小型博客，并能够通过admin页面进行添加。<br><img src="http://p5j7k0f9e.bkt.clouddn.com/toutu2.png" alt="头图"><br><a id="more"></a></p>
+<hr>
+<h2 id="Django入门之搭建一个小型博客"><a href="#Django入门之搭建一个小型博客" class="headerlink" title="Django入门之搭建一个小型博客"></a>Django入门之搭建一个小型博客</h2><p><strong>安装输入代码</strong><br><code>$ sudo pip install Django==1.10.1</code><br>安装成功后使用<br> <code>$python</code><br> <code>&gt;&gt;&gt;import django</code><br> <code>&gt;&gt;&gt;print (django.get(version())</code><br>可打印当前django版本</p>
 <p><strong>创建项目</strong><br>首先要规划好项目创建的位置，我的是在<code>f:/python</code>里面所以以后每次运行django执行项目都要在此文件夹下面。<br>进入文件cmd后输入命令<code>f:/python/&gt;django-admin startproject 项目名</code>这样一个项目就创建好了，相当于一个Python包的地位。</p>
 <p>再次进入你的项目中cmd，输入<code>python manage.py runserver</code>会得到一个网址</p>
 <p><code>Starting development server at http://127.0.0.1.8000/</code><br><code>Quit the server with CONTROL-C</code></p>
@@ -185,7 +187,12 @@
 <p><strong>发布博客</strong><br>最简单的发布博客的方式就是利用Django默认的admin管理博客<br>利用<code>python manage.py createsuperuser</code>创建一个管理员，输入管理员姓名，密码要求至少8位<br>既然是管理员身份，当然管理员页面在<code>blog/admin.py</code>页面。输入代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">from django.contrib import admin</span><br><span class="line">from .models import BlogArticles</span><br><span class="line">admin .site.register(BlogArticles)</span><br></pre></td></tr></table></figure></p>
 <p>这时，进入到<code>http://127.0.0.1:8000/admin</code>中就会将blog关联到admin中<br><img src="http://p5j7k0f9e.bkt.clouddn.com/%E6%97%A0%E6%A0%87%E9%A2%98.png" alt="admin页面"><br>点击add可以进行添加博客，添加后在数据库中也可以查到<br>为在admin中显示到文章的更多属性，在admin.py中更新<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from django.contrib import admin</span><br><span class="line">from models import BlogArticles</span><br><span class="line">class BlogArticlesAdmin(admin.ModelAdmin):</span><br><span class="line">    list_display = (&quot;title&quot;,&quot;author&quot;,&quot;publish&quot;)</span><br><span class="line">    list_filed =(&quot;publish&quot;, &quot;author&quot;)</span><br><span class="line">    search_field = (&apos;title&apos;, &quot;body&quot;)</span><br><span class="line">    raw_id_field = (&quot;author&quot;,)</span><br><span class="line">    date_hierarchy = &quot;publish&quot;</span><br><span class="line">    ordering = [&apos;publish&apos;, &apos;author&apos;]</span><br><span class="line">admin.site.register(BlogArticles,BlogArticlesAdmin)</span><br></pre></td></tr></table></figure></p>
 <p>（使用Python2.7的小朋友有的没有pytz时区的包，需要安装一下使用<code>python -m pip install pytz</code>）</p>
-<hr>
+<p><strong>页面访问博客</strong><br>既然是博客当然不能只有管理员才能看见。<br>在blog/views.py中写函数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">from django.shortcuts import render</span><br><span class="line">from models import BlogArticles</span><br><span class="line">def blog_title(requset):#1 接受响应请求</span><br><span class="line">    blogs = BlogArticles.objects.all() #2 获取BlogsArticles中所有信息</span><br><span class="line">    return render(request,&quot;blog/titles.html&quot;,&#123;&quot;blogs&quot;:blogs&#125;)#3 </span><br><span class="line">``` </span><br><span class="line">对于render函数，第一个参数必须是requset，然后是传送数据的位置，并且数据使用数据字典的方式传送给模板，就是titles.html。</span><br><span class="line">我们的blog中并没有titles.html，所以我们在blog的子目录templates中创建一个titles.html</span><br><span class="line">因为templates是django默认的存放模板的地方，会自动到templates上查找render（）函数</span><br><span class="line">为了方便我们将所有模板相同的部分放在一个base.html中</span><br><span class="line">利用基础模板编写titles.html</span><br><span class="line"></span><br><span class="line">接下来为url配置路径，首先是将应用配置到项目中</span><br></pre></td></tr></table></figure></p>
+<p>urlpatterns = [<br>    url(r’^admin/‘,admin.site.urls),<br>    url(r’^blog/‘,include(‘blog.urls’,namespace=’blog’)),<br>]<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">再讲模板的路径配置到应用中</span><br></pre></td></tr></table></figure></p>
+<p>from django.conf.urls import url<br>from blog import views<br>urlpatterns = [<br>    url(r’^$’, views.blog_title, name=”blog_title”),<br>]<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&quot;^$&quot;表示从^开始到$结束，所以访问此博客的路径就是http://127.0.0.1：8000/blog/</span><br><span class="line">那么怎样查看博客内容</span><br><span class="line">在blog/view.py中添加响应函数</span><br></pre></td></tr></table></figure></p>
+<p>def blog_article(request, article_id):<br>    blog = BlogArticles.objects.get(id =article_id)<br>    pub = article.publish<br>    return render(request,”blog2/content.html”{“article”:article,”publish”:pub })<br><code>``
+添加页面content.html
+最后添加url路径</code> url(r’(?P<article_id>\d)/$’,views.blog_article,name = “blog_detail”),`<br>这样，一个完整简单博客就创建好了。</article_id></p>
 
         </div>
       </article>
@@ -206,7 +213,7 @@
     <div class="container">
       
 <section id="comment">
-  <!-- <h1 class="title">留言</h1> -->
+  <!-- <h1 class="title">Comments</h1> -->
 
   
 </section>
