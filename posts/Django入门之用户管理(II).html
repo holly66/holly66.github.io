@@ -16,7 +16,7 @@
 
   <!--Open Graph Title-->
   
-      <meta property="og:title" content="Hello World"/>
+      <meta property="og:title" content="Django入门之用户管理(II)"/>
   
   <!--Open Graph Description-->
   
@@ -42,7 +42,7 @@
     </script>
   <!-- Title -->
   
-  <title>Hello World - holly</title>
+  <title>Django入门之用户管理(II) - holly</title>
 
 
   <link rel="shortcut icon" href="/favicon.ico">
@@ -161,57 +161,29 @@
         <!-- Title date & tags -->
         <div class="post-header">
           <h1 class="entry-title">
-            Hello World
+            Django入门之用户管理(II)
             
           </h1>
          
         </div>
          <p class="a-posted-on">
-          2018-02-07
+          2018-03-17
           </p>
         <!-- Post Main Content -->
         <div class="entry-content">
-          <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+          <p>本篇内容是利用Python语言，创建一个多用户的文章管理系统。<br><img src="http://on9eybn3x.bkt.clouddn.com/toutu4.png" alt="头图"><br><a id="more"></a></p>
+<hr>
+<h2 id="Django入门之用户管理"><a href="#Django入门之用户管理" class="headerlink" title="Django入门之用户管理"></a>Django入门之用户管理</h2><p><strong>内置方法的登陆登出</strong><br>内置方法登陆封装在Django内部文件中，在内部文件中，登陆页面的模板位置在registration/login.html<br>但需要将数据POST的目标这在action中，是<code>url &#39;account:user_login&#39;</code><br>我们在上一页修改了templates的文件位置，所以现在需要在在templates/registration/login.html中这登陆页面<br>直接复制account/login.html中代码即可<br>将内置的登陆功能放到项目中，需要配置url,引入包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">from django.contrib.auth import views as auth_views</span><br></pre></td></tr></table></figure>
+<p>并且重新配置路径</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">urlpatterns = [</span><br><span class="line">   #url(r&apos;^login/$&apos;, views.user_login, name=&apos;user_login&apos;),</span><br><span class="line">   url(r&apos;^login/$&apos;, auth_views.login, name=&apos;user_login&apos;),</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>这时的默认跳转位置没有变，内置登陆中的默认跳转位置并没有修改，在settings中最后添加<code>LOGIN_REDIRECT_URL=&#39;/blog/&#39;</code><br>设置跳转位置是blog页面，可以自定义<br><strong>检验用户是否登陆</strong><br>在header.html中使用if user.is_authenticated,判断用户是否登陆返会逻辑<br><strong>退出功能</strong><br>使用django内置的退出功能<br>添加account/urls.py<br><code>url(r&#39;^logout/$&#39;, auth_views.logout,name=&#39;user_logout&#39;),</code><br>并为header.html的logout配置跳转页面<code>url &#39;account:user_login</code><br>但其实django的内置页面还是不太美观的，可以直接修改当前页面，当然也可以在template/account/中重新创建一个logout.html页面，并重新将url配置过去，这是比较推荐的方法。<br>url配置如下<br><code>url(r^logout/$,auth_views.logout,{&quot;template_name&quot;:&quot;account/logout.html&quot;},name=&#39;user_logout&#39;),</code></p>
 
         </div>
       </article>
     </div>
     <!-- Pre or Next -->
     
-	<div class="container" >
-           <ul class="pager">
-    	     
-      	     <li class="previous">
-              <a href="/2018/03/17/Django入门之用户管理(II)/" rel="prev">下一篇</a>
-             </li>
-           
-           
-              <li class="next">
-              <a href="/2017/03/23/Django入门之搭载博客/" rel="prev">上一篇</a>
-            </li>
-           
-          </ul>
-       </div>
-　　　　<!-- Comments -->
-    <div class="container">
-      
-<section id="comment">
-  <!-- <h1 class="title">Comments</h1> -->
-
-  
-</section>
-
-
-    </div>
-   
 　　　　
   </div>
 </div>

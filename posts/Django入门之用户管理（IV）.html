@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<!-- Head tag -->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <!--Description-->
+  
+
+  <!--Author-->
+  
+  <meta name="author" content="holly">
+  
+
+  <!--Open Graph Title-->
+  
+      <meta property="og:title" content="Django入门之用户管理(IV)"/>
+  
+  <!--Open Graph Description-->
+  
+  <!--Open Graph Site Name-->
+  <meta property="og:site_name" content="holly"/>
+  <!--Type page-->
+  
+      <meta property="og:type" content="article" />
+  
+  <!--Page Cover-->
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <!-- 百度统计 -->
+    <script>
+	var _hmt = _hmt || [];
+	(function() {
+  	var hm = document.createElement("script");
+  	hm.src = "https://hm.baidu.com/hm.js?c0451e16533956173997b85f7a8de666";
+  	var s = document.getElementsByTagName("script")[0]; 
+  	s.parentNode.insertBefore(hm, s);
+	})();
+    </script>
+  <!-- Title -->
+  
+  <title>Django入门之用户管理(IV) - holly</title>
+
+
+  <link rel="shortcut icon" href="/favicon.ico">
+    <!--font-awesome-->
+  <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <!-- Custom CSS/Sass -->
+  <link rel="stylesheet" href="/css/style.css">
+
+</head>
+
+
+<body>
+
+  <!-- Nav -->
+  <header class="site-header">
+  <div class="header-inside">
+    
+    <div class="logo">
+      <a href="/" rel="home">
+        
+        <img src="http://p5j7k0f9e.bkt.clouddn.com/20180203100824_l3ANf.jpeg" alt="holly" height="60">
+        
+      </a>
+    </div>
+    <a class="header-name" href="/">
+            <span>holly</span>
+            的部落宅
+        </a>
+    <!-- navbar -->
+    <nav class="navbar">
+      <!--  nav links -->
+      <div class="collapse">
+        <ul class="navbar-nav">
+          
+          
+            <li>
+              <a href="/.">
+                
+                  <i class="fa fa-home "></i>
+                
+                首页
+              </a>
+            </li>
+          
+            <li>
+              <a href="/archives">
+                
+                  <i class="fa fa-archive "></i>
+                
+                归档
+              </a>
+            </li>
+          
+            <li>
+              <a href="/about">
+                
+                  <i class="fa fa-user "></i>
+                
+                关于
+              </a>
+            </li>
+          
+            <li>
+              <a href="/project">
+                
+                  <i class="fa fa-folder-open "></i>
+                
+                项目
+              </a>
+            </li>
+          
+            <li>
+              <a href="/photo">
+                
+                  <i class="fa fa-photo "></i>
+                
+                相册
+              </a>
+            </li>
+          
+            <li>
+              <a href="/guestbook">
+                
+                  <i class="fa fa-edit "></i>
+                
+                留言
+              </a>
+            </li>
+          
+            <li>
+              <a href="/atom.xml">
+                
+                  <i class="fa fa-send "></i>
+                
+                RSS
+              </a>
+            </li>
+          
+        </ul>
+      </div>
+      <!-- /.navbar-collapse -->
+    </nav>
+    <div class="button-wrap">
+      <button class="menu-toggle">Primary Menu</button>
+    </div>
+  </div>
+</header>
+
+
+  <!-- Main Content -->
+  <div class="content-area">
+  <div class="post">
+    <!-- Post Content -->
+    <div class="container">
+      <article>
+        <!-- Title date & tags -->
+        <div class="post-header">
+          <h1 class="entry-title">
+            Django入门之用户管理(IV)
+            
+          </h1>
+         
+        </div>
+         <p class="a-posted-on">
+          2018-07-20
+          </p>
+        <!-- Post Main Content -->
+        <div class="entry-content">
+          <p>本篇内容是利用Python语言，创建一个多用户的文章管理系统。<br><img src="http://on9eybn3x.bkt.clouddn.com/toutu5.png" alt="头图"><br><a id="more"></a></p>
+<hr>
+<h2 id="Django入门之用户管理"><a href="#Django入门之用户管理" class="headerlink" title="Django入门之用户管理"></a>Django入门之用户管理</h2><p><strong>修改密码</strong><br>修改密码使用的就是Django内置的方法，就是将Django中的admin页面的方法拿过来直接使用。其源代码在Django的<code>contrib/auth/views.py</code>中的<code>password_change</code><br>既然是直接使用源代码，直接将路径配置好就可以了，配置路径如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">url(r&apos;^password-change/$&apos;,auth_views.password_change,&#123;&quot;post_change_redirect&quot;:&quot;account/password-change-done&quot;&#125;,name=&apos;password_change&apos;),#1</span><br><span class="line">url(r&apos;^password-change-done/$&apos;,auth_views.password_change_done,name=&apos;password_change_done&apos;),</span><br></pre></td></tr></table></figure>
+<p>1.为修改源代码的显示页面的路径为<code>account</code>下的<code>password-change-done</code><br>将跳转链接添加到<code>header.html</code>中跳转链接为<code>account:password_change</code><br>重新启动系统，并登陆就可以对密码进行修改了。<br><strong>密码重置</strong><br>密码重置则是利用在用户忘了密码以后，利用向邮箱发送链接的方式对密码进行重置。使用的依然是Django内置的方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">def password_reset(request,</span><br><span class="line">               template_name=&apos;registration/password_reset_form.html&apos;,</span><br><span class="line">               email_template_name=&apos;registration/password_reset_email.html&apos;,</span><br><span class="line">               subject_template_name=&apos;registration/password_reset_subject.txt&apos;,</span><br><span class="line">               password_reset_form=PasswordResetForm,</span><br><span class="line">               token_generator=default_token_generator,</span><br><span class="line">               post_reset_redirect=None,</span><br><span class="line">               from_email=None,</span><br><span class="line">               extra_context=None,</span><br><span class="line">               html_email_template_name=None,</span><br><span class="line">               extra_email_context=None):</span><br></pre></td></tr></table></figure>
+<p><code>template_name=&#39;registration/password_reset_form.html&#39;</code>为发送邮件的表单模板。可以在原文件位置重写，也可以在account下重写在修改路径。<br><code>email_template_name=&#39;registration/password_reset_email.html&#39;</code>为发送给用户邮件的内容。<br><code>subject_template_name=&#39;registration/password_reset_subject.txt&#39;</code>为发送内容的主题。<br><code>post_reset_redirect=None</code>指明跳转目标，可在url中重新声明。<br><code>password_reset_done</code>为显示发送成功的信息。<br>在account下创建上述声明的html文件对前端文件进行重写。并依次填写url路径为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">url(r&apos;^password-reset/$&apos;,auth_views.password_reset,&#123;&quot;template_name&quot;:&quot;account/password_reset_form.html&quot;,&quot;email_template_name&quot;:&quot;account/password_reset_email.html&quot;,&quot;subject_template_name&quot;:&quot;account/password_reset_subject.txt&quot;,&quot;post_reset_redirect&quot;:&quot;/account/password-reset-done&quot;&#125;,name=&quot;password_reset&quot;),</span><br><span class="line">url(r&apos;^password-reset-done/$&apos;,auth_views.password_reset_done,&#123;&quot;template_name&quot;:&quot;account/password_reset_done.html&quot;&#125;,name=&quot;password_reset_done&quot;),</span><br><span class="line">url(r&apos;^password-reset-confirm/(?P&lt;uidb64&gt;[-\w]+)/(?P&lt;token&gt;[-\w]+)/$&apos;, auth_views.password_reset_confirm, &#123;&quot;template_name&quot;:&quot;account/password_reset_confirm.html&quot;,&quot;post_reset_redirect&quot;:&quot;/account/password-reset-complete&quot;&#125;, name=&quot;password_reset_confirm&quot;),</span><br><span class="line">url(r&apos;^password-reset-complete/$&apos;, auth_views.password_reset_complete, &#123;&quot;template_name&quot;: &quot;account/password_reset_complete.html&quot;&#125;,name=&apos;password_reset_complete&apos;),</span><br></pre></td></tr></table></figure>
+<p>最后在settings中添加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">EMAIL_HOST = &quot;smtp.qq.com&quot;</span><br><span class="line">EMAIL_HOST_USER = &quot;发邮件的邮箱地址&quot;</span><br><span class="line">EMAIL_HOST_PASSWORD = &quot;密码&quot;</span><br><span class="line">EMAIL_PORT = 587#qq邮箱的端口号</span><br><span class="line">EMAIL_USE_TLS = True</span><br><span class="line">DEFAULT_FROM_EMAIL =&quot;发邮件的邮箱地址&quot;</span><br></pre></td></tr></table></figure>
+<p>在这里用的是qq邮箱作为发送信箱，记得在发送邮箱的邮箱中设定允许使用smtp协议发送邮件。<br>在交互模式中测试一下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">python manage.py shell</span><br><span class="line">from django.core.mail import send_mail</span><br><span class="line">send_mail(&quot;learn django&quot;,&quot;there is a very good lesson of Django&quot;,&quot;发送邮件地址&quot;，[&apos;目标地址&apos;]，fail_silently=False)</span><br></pre></td></tr></table></figure>
+<p>   如果成功就会在目标地址中收到一封内容为there is a very good lesson of Django的邮件。<br>在操作的过程中，遇到了很多错误，在django测试页面中，包括10061、10051、10053。<br>首先保证代码无误的情况下，积极谷歌，我遇到的问题，肯定也有人遇见过。<br>注：<br>1.填写的发送邮件的地址一定要在Django中注册过了，Django不会没有理由的给陌生邮箱发送重置密码网址。<br>2.如果在注册过程中使用的邮箱并不是真实有效的，也没有关系，在<code>settings</code>中最后添加一行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EMAIL_BACKEND = &apos;django.corn.mail.backends.console.EmailBackend&apos;</span><br></pre></td></tr></table></figure>
+<p>就可以在后台中收到发送邮箱发送的内容了。</p>
+<p><strong>利用第三方应用重置密码</strong><br>其实和创建一个应用一样，利用第三方应用需要将第三方源代码下载下来，在<code>settings</code>中进行配置，并在配置项目的u。<br>提醒一点，我们这个项目所有的模板文件都放在了<code>/templates</code>目录下，记得将第三方应用中的模板文件拷贝过来。<br>正常情况下就可以使用了。</p>
+
+        </div>
+      </article>
+    </div>
+    <!-- Pre or Next -->
+    
+　　　　
+  </div>
+</div>
+
+
+  <!-- Footer -->
+  <!-- Footer -->
+<footer class="site-info">
+  <p>
+    <span>holly &copy; 2018</span>
+    
+      <span class="split">|</span>
+      <span>holly66</span>
+    
+  </p>
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  本站总访问量<span id="busuanzi_value_site_pv"></span>次
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</footer>
+
+
+  <!-- After footer scripts -->
+  <!-- scripts -->
+<script src="/js/app.js"></script>
+
+
+
+</body>
+
+</html>

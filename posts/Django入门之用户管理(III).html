@@ -171,7 +171,7 @@
           </p>
         <!-- Post Main Content -->
         <div class="entry-content">
-          <p>本篇内容是利用Python语言，创建一个多用户的文章管理系统。<br><img src="http://on9eybn3x.bkt.clouddn.com/toutu5.png" alt="头图"><br><a id="more"></a></p>
+          <p>本篇内容是利用Python语言，创建一个用户注册模块。<br><img src="http://on9eybn3x.bkt.clouddn.com/toutu5.png" alt="头图"><br><a id="more"></a></p>
 <hr>
 <h2 id="Django入门之用户管理"><a href="#Django入门之用户管理" class="headerlink" title="Django入门之用户管理"></a>Django入门之用户管理</h2><p><strong>用户注册</strong><br>我们平时看到的用户注册页面都是由一个一个的表单构成的，所以编写表单文件account/forms.py，在其中创建一个表单类</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">from django import forms</span><br><span class="line">from django.contrib.auth.models import User</span><br><span class="line">class RegistrationForm(forms.ModelForm):</span><br><span class="line">    password = forms.CharField(label=&quot;Password&quot;,widget=forms.PasswordInput)</span><br><span class="line">    password2 = forms.CharField(label=&quot;Confirm Password&quot;,widget=forms.PasswordInput)</span><br><span class="line">    class Meta:  </span><br><span class="line">        model = User</span><br><span class="line">        fields = (&quot;username&quot;,&quot;email&quot;)#1</span><br><span class="line">    def clean_password2(self): #2</span><br><span class="line">        cd = self.cleaned_data</span><br><span class="line">        if cd[&apos;password&apos;]!=cd[&apos;password2&apos;]:</span><br><span class="line">            raise forms.ValidationError(&quot;Passwords do not match.&quot;)</span><br><span class="line">        return cd[&apos;password2&apos;]</span><br></pre></td></tr></table></figure>
@@ -184,7 +184,7 @@
 <p>检查django服务是否运行，打开浏览器，可以运行了。<br><strong>增加注册内容</strong><br>本次添加django中内置没有的属性。那就需要自己创建，还记得博客属性的创建过程么，过程非常类似，首先在account/models.py文件中创建新添加的属性</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">from __future__ import unicode_literals</span><br><span class="line">from django.contrib.auth.models import User</span><br><span class="line">from django.db import models</span><br><span class="line">class UserProfile(models.Model):#1</span><br><span class="line">    user = models.OneToOneField(User, unique=True)#2</span><br><span class="line">    birth = models.DateField(blank=True, null=True)</span><br><span class="line">    phone = models.CharField(max_length=20,null=True)</span><br><span class="line">    def __uncode__(self):</span><br><span class="line">        return &apos;user&#123;&#125;&apos;.format(self.user.nsername)</span><br></pre></td></tr></table></figure>
 <p>1.定义了数据模型类对应在数据库中的名称account_userprofile<br>2.定义的user的唯一性</p>
-<p>然后进行数据迁移<code>python manage.py makemigrations account</code><br>              <code>python manage.py migrate account</code><br>再将这些属性在表单类forms.py中创建</p>
+<p>然后进行数据迁移<br><code>python manage.py makemigrations account</code><br><code>python manage.py migrate account</code><br>再将这些属性在表单类forms.py中创建</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">class UserProfileForm(forms.ModelForm):</span><br><span class="line">    class Meta:</span><br><span class="line">        model = UserProfile</span><br><span class="line">        fields = (&quot;phone&quot;,&quot;birth&quot;)</span><br></pre></td></tr></table></figure>
 <p>编辑视图函数</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">from django.shortcuts import render</span><br><span class="line">from django.http import HttpResponse</span><br><span class="line">from django.contrib.auth import authenticate,login</span><br><span class="line">from .forms import LoginForm,RegistrationForm,UserProfileForm</span><br><span class="line"></span><br><span class="line">    if request.method ==&quot;POST&quot;:</span><br><span class="line">        user_form = RegistrationForm(request.POST)</span><br><span class="line">        userprofile_form = UserProfileForm(request.POST)</span><br><span class="line">        if user_form.is_valid()*userprofile_form.is_valid():</span><br><span class="line">            new_user = user_form.save(commit=False)</span><br><span class="line">            new_user.set_password(user_form.cleaned_data[&apos;password&apos;])</span><br><span class="line">            new_user.save()</span><br><span class="line">            new_profile = userprofile_form.save(commit=False)</span><br><span class="line">            new_profile.user = new_user</span><br><span class="line">            new_profile.save()</span><br><span class="line">            return HttpResponse(&quot;successfully&quot;)</span><br><span class="line">        else:</span><br><span class="line">            return HttpResponse(&quot;sorry,your can not register.&quot;)</span><br><span class="line">    else:</span><br><span class="line">        user_form = RegistrationForm()</span><br><span class="line">        userprofile_form = UserProfileForm()</span><br><span class="line">        return render(request,&quot;account/register.html&quot;,&#123;&quot;form&quot;:user_form,&quot;profile&quot;:userprofile_form&#125;)</span><br></pre></td></tr></table></figure>
@@ -195,28 +195,6 @@
     </div>
     <!-- Pre or Next -->
     
-	<div class="container" >
-           <ul class="pager">
-    	     
-           
-              <li class="next">
-              <a href="/2018/03/17/Django入门之用户管理(I)/" rel="prev">上一篇</a>
-            </li>
-           
-          </ul>
-       </div>
-　　　　<!-- Comments -->
-    <div class="container">
-      
-<section id="comment">
-  <!-- <h1 class="title">Comments</h1> -->
-
-  
-</section>
-
-
-    </div>
-   
 　　　　
   </div>
 </div>
