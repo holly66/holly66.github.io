@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<!-- Head tag -->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <!--Description-->
+  
+
+  <!--Author-->
+  
+  <meta name="author" content="holly">
+  
+
+  <!--Open Graph Title-->
+  
+      <meta property="og:title" content="holly"/>
+  
+  <!--Open Graph Description-->
+  
+  <!--Open Graph Site Name-->
+  <meta property="og:site_name" content="holly"/>
+  <!--Type page-->
+  
+      <meta property="og:type" content="website" />
+  
+  <!--Page Cover-->
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <!-- 百度统计 -->
+    <script>
+	var _hmt = _hmt || [];
+	(function() {
+  	var hm = document.createElement("script");
+  	hm.src = "https://hm.baidu.com/hm.js?c0451e16533956173997b85f7a8de666";
+  	var s = document.getElementsByTagName("script")[0]; 
+  	s.parentNode.insertBefore(hm, s);
+	})();
+    </script>
+  <!-- Title -->
+  
+  <title>holly</title>
+
+
+  <link rel="shortcut icon" href="/favicon.ico">
+    <!--font-awesome-->
+  <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <!-- Custom CSS/Sass -->
+  <link rel="stylesheet" href="/css/style.css">
+
+</head>
+
+
+<body>
+
+  <!-- Nav -->
+  <header class="site-header">
+  <div class="header-inside">
+    
+    <div class="logo">
+      <a href="/" rel="home">
+        
+        <img src="http://p5j7k0f9e.bkt.clouddn.com/20180203100824_l3ANf.jpeg" alt="holly" height="60">
+        
+      </a>
+    </div>
+    <a class="header-name" href="/">
+            <span>holly</span>
+            的部落宅
+        </a>
+    <!-- navbar -->
+    <nav class="navbar">
+      <!--  nav links -->
+      <div class="collapse">
+        <ul class="navbar-nav">
+          
+          
+            <li>
+              <a href="/.">
+                
+                  <i class="fa fa-home "></i>
+                
+                首页
+              </a>
+            </li>
+          
+            <li>
+              <a href="/archives">
+                
+                  <i class="fa fa-archive "></i>
+                
+                归档
+              </a>
+            </li>
+          
+            <li>
+              <a href="/about">
+                
+                  <i class="fa fa-user "></i>
+                
+                关于
+              </a>
+            </li>
+          
+            <li>
+              <a href="/project">
+                
+                  <i class="fa fa-folder-open "></i>
+                
+                项目
+              </a>
+            </li>
+          
+            <li>
+              <a href="/photo">
+                
+                  <i class="fa fa-photo "></i>
+                
+                相册
+              </a>
+            </li>
+          
+            <li>
+              <a href="/guestbook">
+                
+                  <i class="fa fa-edit "></i>
+                
+                留言
+              </a>
+            </li>
+          
+            <li>
+              <a href="/atom.xml">
+                
+                  <i class="fa fa-send "></i>
+                
+                RSS
+              </a>
+            </li>
+          
+        </ul>
+      </div>
+      <!-- /.navbar-collapse -->
+    </nav>
+    <div class="button-wrap">
+      <button class="menu-toggle">Primary Menu</button>
+    </div>
+  </div>
+</header>
+
+
+  <!-- Main Content -->
+  <div class="content-area">
+  <div class="post">
+    <!-- Post Content -->
+    <div class="container">
+      <article>
+        <!-- Title date & tags -->
+        <div class="post-header">
+          <h1 class="entry-title">
+            Untitled
+            
+          </h1>
+         
+        </div>
+         <p class="a-posted-on">
+          2018-09-30
+          </p>
+        <!-- Post Main Content -->
+        <div class="entry-content">
+          <h5 id="存在背景："><a href="#存在背景：" class="headerlink" title="存在背景："></a>存在背景：</h5><p>解决加密外包数据的查询问题。</p>
+<h5 id="现阶段的解决办法："><a href="#现阶段的解决办法：" class="headerlink" title="现阶段的解决办法："></a>现阶段的解决办法：</h5><p>现存的查询加密信息是对外包数据建立安全索引。<br>缺点：</p>
+<ul>
+<li>不能对错误输入进行有效查询。</li>
+<li>随着 edit distance的增加，索引开销会变大。</li>
+<li>使用通配符代替的模糊查询中，语义也容易变化。</li>
+</ul>
+<h5 id="现存办法的主要问题"><a href="#现存办法的主要问题" class="headerlink" title="现存办法的主要问题"></a>现存办法的主要问题</h5><ul>
+<li>通过通配符构造模糊关键字集的模糊关键字搜索和LSH进行模糊查询解决方案很难实现语义保存模糊关键字搜索。</li>
+<li>插入、删除或更改字母顺序通常会改变单词的语义。作为结果，基于lsh基础的模糊关键字搜索方案在维护搜索关键字的语义方面有困难。<h5 id="ALFA主要功能"><a href="#ALFA主要功能" class="headerlink" title="ALFA主要功能"></a>ALFA主要功能</h5></li>
+<li><p>一种增强的模糊关键字集的构造技术。基于拼写相似的字符集，ALFA输入错误的单词扩展到模糊关键字集，这减少了扩展关键字的数量，并减少了索引存储开销。<br> ALFA只会在模糊关键字集中添加关键字的拼写错误，以保持搜索关键字的语义，而关键字的拼写错误则不包含在外包文档的不同关键字集合中。ALFA实现了任意语言模糊关键字搜索，通过采用不同语言的拼写相似的字符集来构建相应的模糊关键字集。</p>
+</li>
+<li><p>ALFA维护搜索关键字的语义。也就是说，匹配的关键字不会改变搜索关键字的语义。<br>1.初始化，生成密钥或者关键字。<br>2.索引的关键字扩展， 在这一步中，数据所有者调用exIndex算法来构造模糊关键字集，并构建包含模糊关键字的明文反向索引。<br>3.对外包文件的加密， 对于外包文档，数据所有者通过调用Enc算法对文档进行加密。<br>4.可搜索索引的构建，在使用前处理关键字之后，数据所有者调用csIndex算法来构造可搜索的索引。<br>5.“活动门”的产生。数据用户通过调用Trpdr算法来生成活动门tp。<br>6.基于b-树的匹配。在接收来自数据用户的陷阱门之后，云服务器通过调用搜索算法来search搜索。<br>7.对搜索结果的解密。最后，数据用户调用Dec算法来解密由云服务器返回的搜索结果。</p>
+</li>
+<li><p>ALFA可以应用于任意语言。通过采用类似字符的不同语言，ALFA适用于任意的语言模糊关键字搜索。特别地，如果将同义词扩展到索引，ALFA可以支持同义词模糊搜索。</p>
+</li>
+</ul>
+<h5 id="相关工作"><a href="#相关工作" class="headerlink" title="相关工作"></a>相关工作</h5><ul>
+<li>模糊查询依赖与特殊函数。<br>采用了近似字符串匹配，并对错误关键字采用相关所搜代替加密搜索。 为了支持相似搜索，关键思想是通过字符对字字符进行加密，并通过海明距离定义相似度。</li>
+<li>模糊查询依赖与模糊关键字集。<br>建立模糊查询和通配符查询可以提高查询的灵活程度，模糊查询包括hamming distance、LSH、n-gram、BF、edit distance。</li>
+</ul>
+<h5 id="模型威胁"><a href="#模型威胁" class="headerlink" title="模型威胁"></a>模型威胁</h5><ul>
+<li>无论搜索关键字的输入错误或不存在,只要索引中包含搜索关键字的拼写正确的单词,然后云服务器将返回包含正确的文档。</li>
+<li>如果关键字搜索是的错误词是一个正确的单词，并且索引同时包含了这两个词，那么云服务器只返回包含搜索关键字的文档。即不能分辨有效的错误输入。</li>
+<li>数据使用者和和数据拥有这是可信任的，云端服务器不能和数据使用者串通。</li>
+<li>云端严格按照协议但可以从各种数据集中获得一些敏感信息。</li>
+</ul>
+<p>注：<br>trapdoor：<br>edit distance: 编辑距离的作用主要是用来比较两个字符串的相似度的 , 又称Levenshtein距离（莱文斯坦距离也叫做Edit Distance），是指两个字串之间，由一个转成另一个所需的最少编辑操作次数，如果它们的距离越大，说明它们越是不同。许可的编辑操作包括将一个字符替换成另一个字符，插入一个字符，删除一个字符。 在概念中，我们可以看出一些重点那就是，编辑操作只有三种。插入，删除，替换这三种操作，我们有两个字符串，将其中一个字符串经过上面的这三种操作之后，得到两个完全相同的字符串付出的代价是什么就是我们要讨论和计算的。edit distance 查询会提高索引开销 <a href="https://blog.csdn.net/chichoxian/article/details/53944188?utm_source=copy" target="_blank" rel="noopener">https://blog.csdn.net/chichoxian/article/details/53944188?utm_source=copy</a></p>
+<p>现有的加密搜索是对外包数据构造安全索引，数据使用者使用索引代替整个加密信息。<br>安全索引：前索引  （索引-文件）、后索引  （文件-索引）速度更快<br>加密方法分成：对称加密（更快）、公钥加密<br>通配符：用来代替一串信息中不知道的信息。<br>海明距： 表示两个等长字符串在对应位置上不同字符的数目，我们以d(x, y)表示字符串x和y之间的汉明距离。从另外一个方面看，汉明距离度量了通过替换字符的方式将字符串x变成y所需要的最小的替换次。<a href="https://blog.csdn.net/chouisbo/article/details/54906909?utm_source=copy" target="_blank" rel="noopener">https://blog.csdn.net/chouisbo/article/details/54906909?utm_source=copy</a><br>     LSH：局部敏感哈希算法，即在高维数据中查找出最近邻的算法，核心思想是将多维数据降成容易记录的数据，在通过特殊的hash函数，使得2个相似度很高的数据以较高的概率映射成同一个hash值，而令2个相似度很低的数据以极低的概率映射成同一个hash值。我们把这样的函数，叫做LSH（局部敏感哈希）。<br>针对不同的相似度测量方法，局部敏感哈希的算法设计也不同，我们主要看看在两种最常用的相似度下，两种不同的LSH：</p>
+<ul>
+<li><p>使用Jaccard系数度量数据相似度时的min-hash<br>将两个文档用矩阵的方式进行对比，将多维数据变成一个二维向量，通过做交换行号，用向量表示出第一个不相同的行号劲儿的出签名向量，这样置换之后统计出来的签名向量，如果其中有一些文档的相似度很高，那么这些文档所对应的签名向量的相应的元素，值相同的概率就很高。<br>在利用定理：对于签名矩阵的任意一行，它的两列元素相同的概率是x/n，其中x代表这两列所对应的文档所拥有的公共词项的数目。而x/n也就是这两个文档的Jaccard系数。<br>构造LSH函数如下：<br>S为两个文档的相似程度，将签名向量进行分块处理，记录行数和列数，并计算每块签名向量的hash值，相同的进行归类。在计算两个文档相似的概率公式如下：<br><img src="https://img-blog.csdn.net/20180927234214186?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzM4ODg1ODUw/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="】"><br>就这个！</p>
+</li>
+<li><p>使用欧氏距离度量数据相似度时的P-stable hash<br>   在满足$P$稳定的局部敏感hash中，估计两点的距离来构建hash函数族。<br>   定向量$v$在欧式空间下的$p$范数的长度，也就是 $\lVert v\lVert$$_p$ ($p$维空间中的向量长度)<br>   1.将空间直线分成长度为r的若干等长线段。<br>   2.通过hash函数，将空间中的点映射到直线上，在同一段的点可以赋予相同的hash值，即空间中点距越高，被映射到同一段的概率就越大。<br>   3.然后估计两点的距离计算两点为同一hash值的概率。<br>   由以上方法构造hash函数，有不同的hash函数LSH的构造算法不同，P-stable hash的LSH算法为构建hash table时，如果把一个函数组对向量的一组共有$k$个hash值：$(h_1(v_i),h_2(v_i),…,h_k(v_i)) ,$作为hash bucket的标识，有两个缺点：1. 空间复杂度大；2. 不易查找。为了解决这个问题，我们采用如下方法：懒得写了，p-stable 分布LSH相似性搜索算法这块。总之就是计算L组hash值，由两组hash值完全相等即认为两条数据是相近的。<br><a href="https://blog.csdn.net/guoziqing506/article/details/53019049?utm_source=copy" target="_blank" rel="noopener">https://blog.csdn.net/guoziqing506/article/details/53019049?utm_source=copy</a><br>通过多数据之间的对比，将多维数据降成一维数据作为文档标签，再对比不同文档的相似程度，将文档归类进而查询使用欧氏距离度量数据相似度时的P-stable hash通过点距，即相似数据的点距会非常小，当然，无论是哪种LSH，其实说白了，都是将高维数据降维到低维数据，同时，还能在一定程度上，保持原始数据的相似度不变。LSH不是确定性的，而是概率性的，也就是说有一定的概率导致原本很相似的数据映射成2个不同的hash值，或者原本不相似的数据映射成同一hash值。这是高维数据降维过程中所不能避免的（因为降维势必会造成某种程度上数据的失真），不过好在LSH的设计能够通过相应的参数控制出现这种错误的概率，这也是LSH为什么被广泛应用的原因。 <a href="https://blog.csdn.net/guoziqing506/article/details/53019049utm_source=copy" target="_blank" rel="noopener">https://blog.csdn.net/guoziqing506/article/details/53019049utm_source=copy</a></p>
+<p> 最近邻： 基于最近邻的监督学习方法分两类：分类，针对的是具有离散标签的数据;回归，针对的是具有连续标签的数据基于最近邻的无监督学习方法用于聚类分析。 最近邻方法原理是从训练样本中找到与查询点在距离上最近的预定数量或范围的多个点，然后依据这些点来预测查询点的标签。从训练样本中找出点的数量可以是用户定义的常量，这叫ķ最近邻学习即KNN，也可以通过用户定义的查询点的距离半径范围得出，这叫基于半径的最近邻学习即RNN。 数据之间的距离可以理解为数据之间的相似度。 距离可以通过多种方式来度量，如欧几里得距离，曼哈顿距离等。标准欧几里得是最常见的选择。最近邻学习方法称为非泛化机器学习方法，因为只是简单的“记住”了其所有的训练数据，死记硬背下所有历史数据，在新数据面前就与所有的历史数据比较从而找出最相似的历史数据。而泛化的机器学习方法在给定的样本数据进行训练之后会形成概念模型，在新数据面前则依据概念模型直接推导计算得出结论 <a href="https://blog.csdn.net/bedrock_stable/article/details/79596227?utm_source=copy" target="_blank" rel="noopener">https://blog.csdn.net/bedrock_stable/article/details/79596227?utm_source=copy</a></p>
+</li>
+</ul>
+
+        </div>
+      </article>
+    </div>
+    <!-- Pre or Next -->
+    
+	<div class="container" >
+           <ul class="pager">
+    	     
+           
+              <li class="next">
+              <a href="/2018/07/20/Django入门之用户管理（IV）/" rel="prev">上一篇</a>
+            </li>
+           
+          </ul>
+       </div>
+　　　　<!-- Comments -->
+    <div class="container">
+      
+<section id="comment">
+  <!-- <h1 class="title">Comments</h1> -->
+
+  
+</section>
+
+
+    </div>
+   
+　　　　
+  </div>
+</div>
+
+
+  <!-- Footer -->
+  <!-- Footer -->
+<footer class="site-info">
+  <p>
+    <span>holly &copy; 2018</span>
+    
+      <span class="split">|</span>
+      <span>holly66</span>
+    
+  </p>
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  本站总访问量<span id="busuanzi_value_site_pv"></span>次
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</footer>
+
+
+  <!-- After footer scripts -->
+  <!-- scripts -->
+<script src="/js/app.js"></script>
+
+
+
+</body>
+
+</html>
